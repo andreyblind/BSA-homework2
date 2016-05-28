@@ -200,9 +200,11 @@
 		                        text : $(_this.config.newText).val(),
 		                        hash:_this.generateNewHash()
 		                    };
-		                    _this.addNewElement(data);
-		                    $(_this.config.newText).val('');
-		                    $(_this.config.newText).focus();
+							if(data.text.length > 1){
+								_this.addNewElement(data);
+								$(_this.config.newText).val('');
+								$(_this.config.newText).focus();
+							}
 		                }
 		                else if(event.which == _this.config.keys["escape"]){
 		                    $(_this.config.newText).val('');
