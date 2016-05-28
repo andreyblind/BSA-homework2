@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/template.js"></script>
+    <link href="css/custom.css" rel="stylesheet" type="text/css">
+    
+</head>
+<body>
+<div id="toDo">
+    <div id="app-list">
+        <div class="newCtrl">
+            <div>
+                <input type="text" id="newText" />
+                <input type="button" class="btn" value="Добавить" id="addEl" />
+                <hr>  
+                <input type="checkbox" id="checkAll" />
+                <span id="checkAllText">Вычеркнуть все</span>
+                <input type="button" class="btn" value="Удалить" id="removeAll" />
+            </div>
+        </div>
+            <div id="container">
+            </div>
+    </div>
+</div>
+<script id="item-template" type="text/x-handlebars-template">
+    <div class="app-item">
+        <input type="checkbox" class="checkItem">
+        <input type="text" class="toBuytext" value="{{text}}">
+        <a href="{{hash}}" class="kill">x</a>
+    </div>
+</script>
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>

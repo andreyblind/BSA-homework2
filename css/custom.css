@@ -1,0 +1,86 @@
+#app-list{
+    display: inline-block;
+    width:300px;
+    background-color: rgba(202, 202, 202, 0.32);
+    border-radius: 15px;
+    margin: 0 auto 0 auto;
+    min-height: 365px;
+}
+#container{
+    min-height:300px;
+}
+.app-item{
+    margin:10px;
+    
+    background-color: #FFF;
+    position: relative;
+    line-height: 50px;
+    padding-left: 20px;
+    font-family:Arial;
+    border-radius: 15px 0 10px 5px;
+}
+.app-item a.kill{
+    visibility: hidden;
+    position: absolute;
+    left:240px;
+    color:black;
+    text-decoration: none;
+}
+.selected{
+    background-color: white;
+}
+.selected a.kill{
+    visibility: visible;
+}
+.selected a.kill:hover{
+    color:red;
+    background:silver;
+}
+.newCtrl{
+    background-color: #DCECF2;
+    padding: 10px;
+    border-radius: 5px;
+    font: 12px Arial;
+    text-transform: uppercase;
+}
+.app-item:hover a.kill{
+    visibility: visible;
+}
+#removeAll{
+    margin-left: 10px;
+}
+input[type=text].toBuytext{
+    border: none;
+    padding: 15px;
+    background-color: #FFF;
+    color:slategray;
+    box-shadow: none !important;
+    outline: none;
+}
+.activeTextInput{
+    color:black;
+}
+.app-item:hover{
+    box-shadow: 0 0 15px rgba(0,0,0,0.10);  
+}
+.killed{
+    text-decoration: line-through;
+    opacity:0.5;
+}
+input[type=button], input[type=text]{
+    border:none;
+    border-radius: 3px;
+    background-color: #FFF;
+    padding: 5px 10px 5px 10px;
+    font: 14px Arial;
+    box-shadow: 1px 3px 2px 1px rgba(179,179,179,0.1);
+    margin: 3px 0 3px 0;
+    outline: none;
+}
+input[type=button]:hover{
+    background-color: #FF9ACD;
+    cursor: pointer;
+    color: #FFF;  
+}
+
+        
