@@ -83,7 +83,6 @@
 
 		var app = {
 	        data:[],
-	        deadElements:[],
 	        text:null,
 	        config:null,
 	        addNewElement:function(data){
@@ -94,11 +93,6 @@
 
 	        getLementIndexByHash:function(hash){
 	            var pos = this.data.map(function(e) { return e.hash; }).indexOf(hash);
-	            return pos;
-	        },
-
-	        getDeadElementIndex:function(hash){
-	            var pos = this.deadElements.map(function(e) { return e.hash; }).indexOf(hash);
 	            return pos;
 	        },
 
@@ -122,15 +116,6 @@
 				}
 	        },
 			
-			removeAllSelectedElements:function(){
-				var _this = this;
-				this.deadElements.forEach(function(el){
-					console.table(el);
-					_this.removeElement(el.hash);
-				});
-				this.deadElements = null;
-			},
-
 	        dumpData:function(){
 	          console.table(this.data);
 	        },
@@ -144,10 +129,6 @@
 					$("#debug").click(function(){
 						console.info("дебагим дату всего приложения");
 						console.table(_this.data);
-						
-						console.info("дебагим элементы к удалению");
-						console.table(_this.deadElements);
-						
 					});
 		            $(_this.config.container).on('click',_this.config.destroyLink, function(){
 		                _this.removeElement($(this).attr("href"),$(this));
@@ -174,15 +155,7 @@
 		                var hash = parent.find("a.kill").attr("href");
 
 		                parent.find(".toBuytext").toggleClass("killed");
-	//
-						
-		                if(checked){
-		                    _this.deadElements.push({hash:hash});
-		                }
-		                if(!checked){
-		                    var index = _this.getDeadElementIndex(hash);
-		                    _this.deadElements.splice(index,1);
-		                }
+
 		            });              
 
 		            $(_this.config.container).on('focusin',_this.config.editPurchase, function() {
@@ -196,12 +169,10 @@
 			                        hash:that.parent().find("a.kill").attr("href"),
 			                        text:that.val()
 			                    };
-								
-									_this.setNewData(data);
-									$(_this.config.newText).focus();
+								_this.setNewData(data);
+								$(_this.config.newText).focus();
 			                }
-			                else if(event.keyCode == _this.config.keys["escape"]){
-	//!!		                console.log(_this);   
+			                else if(event.keyCode == _this.config.keys["escape"]){ 
 							   _this.restoreData($(that));
 			                    $(_this.config.newText).focus();
 			                }
@@ -228,12 +199,9 @@
 		            
 		            $(_this.config.removeAll).click(function(){
 						$('input[type=checkbox].checkItem:checked').each(function () {
-							var hash= $(this).parent().find("a.kill").attr("href");
+							var hash= $(this).attr("value");
 							_this.removeElement(hash,$(this));
 						});
-		               /* $("input[type=checkbox].checkItem:checked").parent().remove();
-		                 _this.removeAllSelectedElements();
-						 */
 		            });
 		                                      
 		            $(_this.config.addButton).click(function(){
@@ -242,8 +210,9 @@
 		                    hash:_this.generateNewHash()
 		                };
 					
-						if(data.text.length > 1){
+						if(data.text.length > 0){
 							_this.addNewElement(data);
+							$(_this.config.newText).val("");
 						}	
 		            });
 		        },
