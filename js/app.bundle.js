@@ -117,8 +117,19 @@
 
 	        removeElement:function(hash,that){
 	            this.data.splice(this.getLementIndexByHash(hash),1);
-	            that.parent().remove();
+				if(that !== undefined){
+					that.parent().remove();
+				}
 	        },
+			
+			removeAllSelectedElements:function(){
+				var _this = this;
+				this.deadElements.forEach(function(el){
+					console.table(el);
+					_this.removeElement(el.hash);
+				});
+				this.deadElements = null;
+			},
 
 	        dumpData:function(){
 	          console.table(this.data);
@@ -151,18 +162,20 @@
 		                стиль элементов к удалению
 		             */
 		            $(_this.config.checkAll).change(function () {
-		                $("input:checkbox").prop('checked', $(this).prop("checked"));
+		                $("input:checkbox").prop('checked', $(this).prop("checked")); //
 		                $(_this.config.editPurchase).toggleClass("killed");
 		            });
 
 		            $(_this.config.container).on('change',_this.config.checkItem,function () {
+						
 		                var that = $(this);
 		                var parent = that.parent();
 		                var checked = that.prop("checked");
 		                var hash = parent.find("a.kill").attr("href");
 
 		                parent.find(".toBuytext").toggleClass("killed");
-
+	//
+						
 		                if(checked){
 		                    _this.deadElements.push({hash:hash});
 		                }
@@ -214,8 +227,13 @@
 		            });
 		            
 		            $(_this.config.removeAll).click(function(){
-		                $("input[type=checkbox].checkItem:checked").parent().remove();
-		                    _this.deadElements = {};
+						$('input[type=checkbox].checkItem:checked').each(function () {
+							var hash= $(this).parent().find("a.kill").attr("href");
+							_this.removeElement(hash,$(this));
+						});
+		               /* $("input[type=checkbox].checkItem:checked").parent().remove();
+		                 _this.removeAllSelectedElements();
+						 */
 		            });
 		                                      
 		            $(_this.config.addButton).click(function(){
