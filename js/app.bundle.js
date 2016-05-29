@@ -46,9 +46,8 @@
 
 	var config = __webpack_require__(1);
 	var toDoApp = __webpack_require__(2);
-
-	//toDoApp.setHandlers(config);
-	toDoApp.init(config);
+	var handlers = __webpack_require__(3);
+	toDoApp.init(config,handlers);
 
 
 /***/ },
@@ -124,7 +123,19 @@
 	            return '#' + Math.random().toString(36).substr(2, 36);
 	        },
 
-	        setHandlers:function(){
+	        init:function(data,handlers){
+				this.setHandlers = handlers;
+				this.config = data;
+	            $(document).ready(this.setHandlers());
+	        }
+	    };
+	module.exports = app;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	var handler = function(){
 					var _this = this;
 					$("#debug").click(function(){
 						console.info("дебагим дату всего приложения");
@@ -148,21 +159,18 @@
 		            });
 
 		            $(_this.config.container).on('change',_this.config.checkItem,function () {
-						
 		                var that = $(this);
 		                var parent = that.parent();
 		                var checked = that.prop("checked");
 		                var hash = parent.find("a.kill").attr("href");
-
 		                parent.find(".toBuytext").toggleClass("killed");
-
 		            });              
 
 		            $(_this.config.container).on('focusin',_this.config.editPurchase, function() {
 		                _this.text=$(this).val();
 		            });
 
-					 $(_this.config.container).on('keyup',_this.config.editPurchase, function(event){
+					$(_this.config.container).on('keyup',_this.config.editPurchase, function(event){
 			                var that = $(this);
 			                if(event.keyCode == _this.config.keys["enter"]) {
 			                    var data= {
@@ -215,13 +223,8 @@
 							$(_this.config.newText).val("");
 						}	
 		            });
-		        },
-	        init:function(data){
-				this.config = data;
-	            $(document).ready(this.setHandlers());
-	        }
-	    };
-	module.exports = app;
+		        }
+	module.exports = handler;
 
 /***/ }
 /******/ ]);
